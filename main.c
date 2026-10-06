@@ -1,80 +1,62 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define SIZE 5
-
-struct queue
+struct stack
 {
-    int front,rare;
-    int data[SIZE];
-};
-typedef struct queue QUEUE;
-void enqueue (QUEUE*q,int item)
-{
-    if(q->rare==SIZE-1)
-        printf("\n Queue full");
+ int top;
+ int data[SIZE];
+ };
+typedef struct stack STACK;
+void push(STACK*s,int item){
+if(s->top==SIZE-1)
+    printf("\n stack overflow");
     else{
-        q->rare=q->rare+1;
-        q->data[q->rare]=item;
-        if(q->front==-1)
-            q->front=0;
-
+        s->top=s->top+1;
+        s->data[s->top]=item;
     }
 }
-
-void dequeue(QUEUE*q)
-{
-    if(q->front==-1)
-        printf("\n Queue is Empty");
-        else{
-            printf("\n Element deleted is %d ",q->data[q->front]);
-            if(q->front==q->rare)
-            {
-                q->front=-1;
-                q->rare=-1;
-
-            }
-            else
-                q->front=q->front+1;
-        }
-}
-void display(QUEUE q)
-{
-    int i;
-    if(q.front==-1)
-        printf("\n queue is empty");
+void pop (STACK*s){
+if (s->top==-1)
+    printf("\n stack is underflow");
     else{
-        printf("\n The containt of queue are\n");
-        for(i=q.front;i<=q.rare;i++)
-            printf("%d\t",q.data[i]);
-
+        printf("\n element poped is=%d",s->data[s->top]);
+        s->top=s->top-1;
     }
+
 }
-int main()
-{
-    QUEUE q;
-    q.front=-1;
-    q.rare=-1;
-    int item,ch;
-    for(;;){
-        printf("\n 1.Insert");
-        printf("\n 2.Delete");
-        printf("\n 3.Display");
-        printf("\n 4.Exit");
-        printf("\n Read choice");
-        scanf("%d",&ch);
-        switch(ch)
-        {
-            case 1: printf("\n read the element to be insert:");
-            scanf("%d",&item);
-            enqueue(&q,item);
-            break;
-            case 2: dequeue(&q);
-            break;
-            case 3: display(q);
-            break;
-            default: exit(0);
-
-        }
-    }
+void display (STACK s){
+int i;
+if(s.top==-1)
+    printf("\n stack is empty");
+else{
+    printf("\n stack content are \n");
+    for(i=s.top; i>=0; i--)
+        printf("%d\n",s.data[i]);
+}
+}
+int main(){
+int ch,item;
+STACK s;
+s.top=-1;
+for(;;){
+printf("\n1.push");
+printf("\n2.pop");
+printf("\n3.display");
+printf("\n4.exit");
+printf("\n read choice:");
+scanf("%d",&ch);
+switch(ch){
+case 1:printf("\n read element to be pushed:"),
+scanf("%d",&item);
+push(&s, item);
+break;
+case 2:pop(&s);
+break;
+case 3:display(s);
+break;
+default:exit(0);
+}
+}
     return 0;
 }
+
