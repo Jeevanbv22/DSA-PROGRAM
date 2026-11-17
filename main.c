@@ -1,25 +1,109 @@
 #include <stdio.h>
 #include <stdlib.h>
-void towerofhanoi(int n,char source, char dest, char temp)
+
+struct node {
+int data;
+struct node *left;
+struct node*right;
+
+};
+typedef struct node *NODE;
+NODE createBST (NODE root ,int item)
 {
-    if(n>1)
+    NODE temp,cur,prev;
+    temp=(NODE)malloc(sizeof(struct node));
+    temp->data=item;
+    temp->left=NULL;
+    temp->right=NULL;
+    if(root==NULL)
+        return temp;
+    prev=NULL;
+    cur=root;
+    while(cur!=NULL)
     {
-        towerofhanoi(n-1,source,temp,dest);
-        printf("\n move %d disc from %c to %c",n,source,dest);
-        towerofhanoi(n-1,temp,dest,source);
+        prev=cur;
+        if(item<cur->data)
+            cur=cur->left;
+        else
+            cur=cur->right;
 
     }
-    else
-         printf("\n move %d disc from %c to %c",n,source,dest);
-
+    if(item<prev->data)
+            prev->left=temp;
+        else
+            prev->right=temp;
+            return root;
 }
-int main()
+
+void preorder(NODE root)
 {
-     int n;
-     printf
+    if(root !=NULL)
+    {
+        printf("%d\t",root->data);
+        preorder(root->left);
+        preorder(root->right);
 
-     ("|n Read numbers of disces :");
-     scanf("%d",&n);
-     towerofhanoi(n,'S','D','T');
-     return 0;
+    }
 }
+void inorder(NODE root)
+{
+    if(root!=NULL)
+    {
+        inorder(root->left);
+        printf("%d \t",root->data);
+        inorder(root->right);
+    }
+
+}
+ void postorder(NODE root)
+ {
+     if (root !=NULL)
+     {
+         postorder(root->left);
+         postorder(root->right);
+         printf("%d \t", root->data);
+
+
+     }
+ }
+ int main()
+ {
+     NODE root=NULL;
+     int ch,item;
+     for(;;)
+     {
+         printf("\n 1.Insert");
+         printf("\n 2.Preorder");
+         printf("\n 3.Inorder");
+         printf("\n 4.Postore");
+         printf("\n 5.Exit");
+         printf("\n Read choice:");
+         scanf("%d",&ch);
+         switch (ch)
+         {
+             case 1:printf("Read Elements to be inserted:");
+             scanf("%d",&item);
+             root=createBST(root,item);
+             break;
+
+             case 2:printf("preorder traversal is \n");
+             preorder(root);
+             break;
+
+             case 3:printf("Inorder traversal is \n");
+             inorder(root);
+             break;
+
+             case 4:printf("Postorder traversal is \n");
+             postorder(root);
+             break;
+
+             default :exit(0);
+
+         }
+
+
+     }
+     return 0;
+ }
+
